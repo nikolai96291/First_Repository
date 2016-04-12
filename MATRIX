@@ -9,8 +9,8 @@ protected:
 	float* data;
 public:
 	virtual AbstractMatrix& operator+(AbstractMatrix&) = 0;
-	//virtual AbstractMatrix& operator*(const AbstractMatrix&) = 0;
-	//virtual AbstractMatrix& operator*(const int&) = 0;
+	//virtual AbstractMatrix& operator*(AbstractMatrix&) = 0;
+	virtual AbstractMatrix& operator*(int&) = 0;
 	virtual AbstractMatrix& operator-(AbstractMatrix&) = 0;
 	//virtual AbstractMatrix& reverse() = 0;
 	//virtual AbstractMatrix& transpose() = 0;
@@ -21,34 +21,74 @@ public:
 	virtual float get(int i, int j) = 0;
 	virtual int getN() = 0;
 	virtual int getM() = 0;
-	//virtual bool failed() = 0;
+	virtual bool failed() = 0;
 };
 class matrix : public AbstractMatrix
 {
 public:
 	matrix()
 	{
-		n = 0;
-		m = 0;
-		data = NULL;
+		this->n = 0;
+		this->m = 0;
+		this->data = NULL;
 	}
 	matrix(const matrix& a)
+	{}
+	~matrix()
+	{}
+	AbstractMatrix& operator*(AbstractMatrix& a)
+	{	
+		matrix* c = new matrix;
+		if (this->getM() == a.getN())
+		{
+			float k = 0;
+			c->n = this->getN();
+			c->m = a.getM();
+			c->data = new float[this->getN()*a.getM()];
+			for (int i = 0; i < n; i++)
+			{
+				for (int j = 0; j < m; j++)
+				{
+					for (int p = 0; p < this->getN(); p++)
+						k = k + this->get(i,p)*a.get(j,p);
+					c->set(i, j, k);
+					cout << k<<endl;
+					k = 0;
+				}
+			}
+			return(*c);
+		}
+		else
+		{
+			//c->n = 0;
+		//	c->m = 0;
+	//		c->data = NULL;
+			return(*c);
+		}
+	}
+	AbstractMatrix& operator*(int& k)
 	{
-		this->data = new float[a.n*a.m];
-		for (int i = 0; i < a.n; i++)
+		matrix* c = new matrix;
+		c->n = this->getN();
+		c->m = this->getM();
+		c->data = new float[this->getN()*this->getM()];
+		for (int i = 0; i < n; i++)
 		{
 			for (int j = 0; j < m; j++)
 			{
-				this->set(i, j, a.data[i*a.n+j]);
+				c->set(i, j, this->get(i, j)*k);
 			}
-		}	
+		}
+		return(*c);
 	}
-	AbstractMatrix& operator + (AbstractMatrix& a)
+	AbstractMatrix& operator+(AbstractMatrix& a)
 	{
 		matrix* c = new matrix;
-		if (n == a.getN() && m == a.getM())
+		if (this->n == a.getN() && this->m == a.getM())
 		{
-			c->data = new float[n*m];
+			c->n = a.getN();
+			c->m = a.getM();
+			c->data = new float[a.getN()*a.getM()];
 			for (int i = 0; i < n; i++)
 			{
 				for (int j = 0; j < m; j++)
@@ -56,54 +96,40 @@ public:
 					c->set(i, j, this->get(i, j) + a.get(i, j));
 				}
 			}
-			return (*c);
+			return(*c);
 		}
 		else
 		{
 			c->n = 0;
 			c->m = 0;
 			c->data = NULL;
-			return (*c);
+			return(*c);
 		}
-
 	}
-
-	AbstractMatrix& operator - (AbstractMatrix& a)
+	AbstractMatrix& operator-(AbstractMatrix& a)
 	{
-		if (n == a.getN() && m == a.getM())
+		matrix* c = new matrix;
+		if (this->n == a.getN() && this->m == a.getM())
 		{
-			matrix c;
-			c.data = new float[n*m];
+			c->n = a.getN();
+			c->m = a.getM();
+			c->data = new float[a.getN()*a.getM()];
 			for (int i = 0; i < n; i++)
 			{
 				for (int j = 0; j < m; j++)
 				{
-					c.set(i, j, this->get(i, j) - a.get(i, j));
+					c->set(i, j, this->get(i, j) - a.get(i, j));
 				}
 			}
-			return matrix (c);
+			return(*c);
 		}
 		else
 		{
-			matrix c;
-			c.n = 0;
-			c.m = 0;
-			c.data = NULL;
-			return matrix (c);
+			c->n = 0;
+			c->m = 0;
+			c->data = NULL;
+			return(*c);
 		}
-
-	}
-	matrix& operator = (AbstractMatrix& a)
-	{
-		this->data = new float[a.getN()*a.getM()];
-		for (int i = 0; i < a.getN(); i++)
-		{
-			for (int j = 0; j < a.getM(); j++)
-			{
-				this->set(i, j, a.get(i, j));
-			}
-		}
-		return matrix (*this);
 	}
 	ostream& print(ostream& o)
 	{
@@ -135,11 +161,11 @@ public:
 	}
 	void set(int i, int j, float data)
 	{
-		this->data[i*m + j] = data;
+		this->data[i*this->m + j] = data;
 	}
 	float get(int i, int j)
 	{
-		return(this->data[i*m + j]);
+		return(this->data[i*this->m + j]);
 	}
 	int getN()
 	{
@@ -148,5 +174,12 @@ public:
 	int getM()
 	{
 		return(this->m);
+	}
+	bool failed()
+	{
+		if (this->n == 0 && this->m == 0 && this->data == NULL)
+			return true;
+		else
+			return false;
 	}
 };
