@@ -84,9 +84,9 @@ public:
 	{
 		this->count = 0;
 		this->_default = Default;
-		this->next = new NewList(NULL); 
+		this->next = new NewList(NULL);
 	}
-	NewList() 
+	NewList()
 	{
 		this->count = 0;
 		this->next = new NewList(NULL);
@@ -98,7 +98,7 @@ public:
 		this->_data = Data;
 		this->next = Next;
 	}
-	NewList(const NewList& a) 
+	NewList(const NewList& a)
 	{
 		this->count = a.count + 1;
 		this->_data = a._data;
@@ -114,7 +114,7 @@ public:
 		tmp->count = a.count + 1;
 		return *tmp;
 	}
-	virtual ~NewList() 
+	virtual ~NewList()
 	{
 		if (this->count != 0)
 		{
@@ -125,13 +125,13 @@ public:
 	{
 		int i = 0;
 		NewList* tmp;
-		tmp = next;
-		while (tmp->next!=NULL)
+		tmp = this;
+		while (tmp->next != NULL)
 		{
 			tmp = tmp->next;
 			i++;
 		}
-		return i;
+		return i - 1;
 	}
 	virtual T get(int index)
 	{
@@ -139,13 +139,13 @@ public:
 			return _default;
 		int i = 0;
 		NewList* tmp;
-		tmp = next;
+		tmp = this;
 		while (i < index)
 		{
 			tmp = tmp->next;
 			i++;
 		}
-		return tmp->next->_data;
+		return tmp->_data;
 	}
 	virtual void set(int index, T data)
 	{
@@ -153,42 +153,87 @@ public:
 			return;
 		int i = 0;
 		NewList* tmp;
-		tmp = next;
+		tmp = this;
 		while (i < index)
 		{
 			tmp = tmp->next;
 			i++;
 		}
-		tmp->next->_data=data;
+		tmp->_data = data;
 	}
 	virtual void insert(int index, T data)
 	{
 		if (next == NULL || index < 0)
 			return;
-		NewList* tmp1 = next;
+		NewList* tmp1 = this;
 		int i = 0;
-		while (i < T && tmp1->next != NULL)
+		while (i < index && tmp1->next != NULL)
 		{
-			tmp1 = tmp1->Next;
+			tmp1 = tmp1->next;
 			i++;
 		}
 
-		complex* tmp = new complex;
+		NewList* tmp = new NewList;
 		tmp->_data = data;
-		if (tmp1->Next != NULL)
+		if (tmp1->next != NULL)
 		{
-			tmp->Next = tmp1->Next;
+			tmp->next = tmp1->next;
 		}
 		else
 		{
-			tmp->Next = NULL;
+			tmp->next = NULL;
 		}
-		tmp1->Next = tmp;
+		tmp1->next = tmp;
 	}
+
 	virtual T remove(int index)
 	{
+		int i = 0;
+		NewList* tmp = this;
+		while (i < index)
+		{
+			tmp = tmp->next;
+			i++
+		}
+		NewList* tmp1 = tmp->next;
+		tmp->next = tmp1->next;
+		T _data1 = tmp1->_data;
+		delete tmp1;
+		return _data1;
 	}
 	virtual void sort(bool(*f) (T* first, T* second))
 	{
+		list* tmp = this;
+		list* tmp1 = this;
+		list* _next = this;
+		list* prev = this;
+		for (int i = 0; i < len(); i++)
+			for (int k = 0; k < len() - 1; k++)
+			{
+				if (f(&(tmp->data), &(tmp->next->data)))
+				{
+					tmp1 = tmp->next;
+					_next = tmp1->next;
+					prev->next = tmp1;
+					tmp1->next = tmp;
+					tmp->next = _next;
+				}
+				prev = tmp;
+				tmp = tmp->next;
+			}
 	}
 };
+
+template <typename T>
+bool gr(T* first, T* second)
+{
+	if (*first > *second)
+		return true;
+	return false;
+}
+
+NewList<string>* get_init()
+{
+	NewList<string>* init = new NewList<string>("EMPTY!");
+	return init;
+}
