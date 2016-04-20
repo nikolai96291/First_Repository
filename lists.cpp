@@ -193,7 +193,7 @@ public:
 		while (i < index)
 		{
 			tmp = tmp->next;
-			i++
+			i++;
 		}
 		NewList* tmp1 = tmp->next;
 		tmp->next = tmp1->next;
@@ -203,23 +203,23 @@ public:
 	}
 	virtual void sort(bool(*f) (T* first, T* second))
 	{
-		list* tmp = this;
-		list* tmp1 = this;
-		list* _next = this;
-		list* prev = this;
+		NewList* tmp = this;
+		NewList* tmp1 = this;
+		NewList* _next = this;
+		NewList* prev = this;
 		for (int i = 0; i < len(); i++)
 			for (int k = 0; k < len() - 1; k++)
 			{
-				if (f(&(tmp->data), &(tmp->next->data)))
-				{
-					tmp1 = tmp->next;
-					_next = tmp1->next;
-					prev->next = tmp1;
-					tmp1->next = tmp;
-					tmp->next = _next;
-				}
-				prev = tmp;
-				tmp = tmp->next;
+			if (f(&(tmp->_data), &(tmp->next->_data)))
+			{
+				tmp1 = tmp->next;
+				_next = tmp1->next;
+				prev->next = tmp1;
+				tmp1->next = tmp;
+				tmp->next = _next;
+			}
+			prev = tmp;
+			tmp = tmp->next;
 			}
 	}
 };
