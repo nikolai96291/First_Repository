@@ -135,8 +135,8 @@ public:
 	}
 	virtual T get(int index)
 	{
-		//if (index >= len() || index < 0)
-		//	return _default;
+		if (index >= len() || index < 0)
+			return this->_default;
 		int i = 0;
 		NewList* tmp;
 		tmp = this;
