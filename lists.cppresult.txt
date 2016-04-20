@@ -3,25 +3,4 @@ uljshin/lists.cpp: In member function 'virtual T NewList<T>::get(int)':
 uljshin/lists.cpp:139:11: error: '_default' was not declared in this scope
     return _default;
            ^
-uljshin/lists.cpp: In member function 'virtual T NewList<T>::remove(int)':
-uljshin/lists.cpp:197:3: error: expected ';' before '}' token
-   }
-   ^
-uljshin/lists.cpp: In member function 'virtual void NewList<T>::sort(bool (*)(T*, T*))':
-uljshin/lists.cpp:206:3: error: 'list' was not declared in this scope
-   list* tmp = this;
-   ^
-uljshin/lists.cpp:206:9: error: 'tmp' was not declared in this scope
-   list* tmp = this;
-         ^
-uljshin/lists.cpp:207:9: error: 'tmp1' was not declared in this scope
-   list* tmp1 = this;
-         ^
-uljshin/lists.cpp:208:9: error: '_next' was not declared in this scope
-   list* _next = this;
-         ^
-uljshin/lists.cpp:217:10: error: overloaded function with no contextual type information
-      prev->next = tmp1;
-          ^
-uljshin/lists.cpp:217:10: error: base operand of '->' is not a pointer
 ./check.sh: line 24: ./a.out: No such file or directory
