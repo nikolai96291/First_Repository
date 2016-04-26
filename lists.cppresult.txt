@@ -2,15 +2,27 @@
 [----------] Global test environment set-up.
 [----------] 7 tests from ListTest
 [ RUN      ] ListTest.ListLen
-[       OK ] ListTest.ListLen
+cur.cpp:20: Failure
+Value of: l->len()
+  Actual: 1
+Expected: 0
+[  FAILED  ] ListTest.ListLen
 [ RUN      ] ListTest.DeleteOne
+cur.cpp:27: Failure
+Value of: l->len()
+  Actual: 1
+Expected: 0
 cur.cpp:29: Failure
 Value of: l->len()
-  Actual: -1
+  Actual: 1
 Expected: 0
 [  FAILED  ] ListTest.DeleteOne
 [ RUN      ] ListTest.AddOne
-[       OK ] ListTest.AddOne
+cur.cpp:37: Failure
+Value of: l->len()
+  Actual: 2
+Expected: 1
+[  FAILED  ] ListTest.AddOne
 [ RUN      ] ListTest.AddAndCheckOne
 cur.cpp:46: Failure
 Value of: l->get(0).c_str()
@@ -18,16 +30,27 @@ Value of: l->get(0).c_str()
 Expected: "fail"
 [  FAILED  ] ListTest.AddAndCheckOne
 [ RUN      ] ListTest.PopOne
-[       OK ] ListTest.PopOne
+cur.cpp:53: Failure
+Value of: l->len()
+  Actual: 1
+Expected: 0
+cur.cpp:54: Failure
+Value of: l->empty()
+  Actual: false
+Expected: true
+[  FAILED  ] ListTest.PopOne
 [ RUN      ] ListTest.PushPop
 [       OK ] ListTest.PushPop
 [ RUN      ] ListTest.PushPop1E3
 [       OK ] ListTest.PushPop1E3
 [----------] Global test environment tear-down
 [==========] 7 tests from 1 test case ran.
-[  PASSED  ] 5 tests.
-[  FAILED  ] 2 tests, listed below:
+[  PASSED  ] 2 tests.
+[  FAILED  ] 5 tests, listed below:
+[  FAILED  ] ListTest.ListLen
 [  FAILED  ] ListTest.DeleteOne
+[  FAILED  ] ListTest.AddOne
 [  FAILED  ] ListTest.AddAndCheckOne
+[  FAILED  ] ListTest.PopOne
 
- 2 FAILED TESTS
+ 5 FAILED TESTS
