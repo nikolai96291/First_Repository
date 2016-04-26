@@ -131,7 +131,7 @@ public:
 			tmp = tmp->next;
 			i++;
 		}
-		return i - 1;
+		return i;
 	}
 	virtual T get(int index)
 	{
@@ -188,6 +188,8 @@ public:
 
 	virtual T remove(int index)
 	{
+		if (next->next == NULL || index < 0)
+			return this->_default;
 		int i = 0;
 		NewList* tmp = this;
 		while (i < index)
@@ -210,16 +212,16 @@ public:
 		for (int i = 0; i < len(); i++)
 			for (int k = 0; k < len() - 1; k++)
 			{
-			if (f(&(tmp->_data), &(tmp->next->_data)))
-			{
-				tmp1 = tmp->next;
-				_next = tmp1->next;
-				prev->next = tmp1;
-				tmp1->next = tmp;
-				tmp->next = _next;
-			}
-			prev = tmp;
-			tmp = tmp->next;
+				if (f(&(tmp->_data), &(tmp->next->_data)))
+				{
+					tmp1 = tmp->next;
+					_next = tmp1->next;
+					prev->next = tmp1;
+					tmp1->next = tmp;
+					tmp->next = _next;
+				}
+				prev = tmp;
+				tmp = tmp->next;
 			}
 	}
 };
