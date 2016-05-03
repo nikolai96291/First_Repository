@@ -134,18 +134,21 @@ public:
 		return i-1;
 	}
 	virtual T get(int index)
-	{
-		if (index >= len() || index < 0)
-			return this->_default;
-		int i = 0;
-		NewList* tmp;
-		tmp = this;
-		while (i < index)
+        {
+		NewList* tmp = this;
+		if (index >= len())
+		{
+			return tmp->_default;
+		}
+		for (int i = 0; i < len(); i++)
 		{
 			tmp = tmp->next;
-			i++;
+			if (index == i)
+			{
+				return tmp->data;
+			}
 		}
-		return tmp->_data;
+		return tmp->_default;
 	}
 	virtual void set(int index, T data)
 	{
