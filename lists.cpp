@@ -145,7 +145,7 @@ public:
 			tmp = tmp->next;
 			if (index == i)
 			{
-				return tmp->data;
+				return tmp->_data;
 			}
 		}
 		return tmp->_default;
