@@ -152,17 +152,23 @@ public:
 	}
 	virtual void set(int index, T data)
 	{
-		if (next->next == NULL || index < 0 || index >= len())
-			return;
-		int i = 0;
-		NewList* tmp;
-		tmp = this;
-		while (i < index)
-		{
-			tmp = tmp->next;
-			i++;
-		}
-		tmp->_data = data;
+	        NewList* tmp = this;
+
+         if (index >= len())
+         {
+             return;
+         }
+         for (int i(0); i < len(); i++)
+         {
+             tmp = tmp->next;
+             if (index == i)
+             {
+                 tmp->_data = data;
+                 return ;
+             }
+
+         }
+         return;
 	}
 	virtual void insert(int index, T data)
 	{
