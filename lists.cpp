@@ -75,6 +75,11 @@ class NewList : public AbstractList<T>
 	T _data;
 	NewList* next;
 public:
+	NewList(NewList* Next)
+	{
+		this->count = 0;
+		this->next = Next;
+	}
 	NewList(T Default)
 	{
 		this->count = 0;
@@ -86,11 +91,12 @@ public:
 		this->count = 0;
 		this->next = new NewList(NULL);
 	}
-	NewList(T _data, T _default)
+	NewList(T Data, T Default, NewList* Next)
 	{
-		this->_data = _data;
-		this->_default = _default;
-		this->next = NULL;
+		this->count = 0;
+		this->_default = Default;
+		this->_data = Data;
+		this->next = Next;
 	}
 	NewList(const NewList& a)
 	{
@@ -125,10 +131,10 @@ public:
 			tmp = tmp->next;
 			i++;
 		}
-		return i;
+		return i-1;
 	}
 	virtual T get(int index)
-	{
+        {
 		NewList* tmp = this;
 		if (index >= len())
 		{
@@ -144,58 +150,49 @@ public:
 		}
 		return tmp->_default;
 	}
-	
 	virtual void set(int index, T data)
 	{
-		NewList* tmp = this;
+	        NewList* tmp = this;
 
-		if (index >= len())
-		{
-			return;
-		}
-		for (int i(0); i < len(); i++)
-		{
-			tmp = tmp->next;
-			if (index == i)
-			{
-				tmp->_data = data;
-				return;
-			}
+         if (index >= len())
+         {
+             return;
+         }
+         for (int i(0); i < len(); i++)
+         {
+             tmp = tmp->next;
+             if (index == i)
+             {
+                 tmp->_data = data;
+                 return ;
+             }
 
-		}
-		return;
+         }
+         return;
 	}
 	virtual void insert(int index, T data)
 	{
-		NewList* tmp = this;
-		NewList* tmp1 = new NewList(data, this->_default);
-		
-		if (index >= len())
-		{
-			NewList* tmp2 = tmp->next;
-			int i = 0;
-			while (i < len())
-			{
-				i++;
-				tmp = tmp->next;
-			}
-			
-			tmp->next = tmp1;
-			tmp1->next = tmp2;
+		if (next == NULL || index < 0)
 			return;
-		}
-		for (int i(0); i<len(); i++)
+		NewList* tmp1 = this;
+		int i = 0;
+		while (i < index && tmp1->next != NULL)
 		{
-
-			if (i == index)
-			{
-				NewList* tmp2 = tmp->next;
-				tmp->next = tmp1;
-				tmp1->next = tmp2;
-			}
-			tmp = tmp->next;
+			tmp1 = tmp1->next;
+			i++;
 		}
-		return;
+
+		NewList* tmp = new NewList;
+		tmp->_data = data;
+		if (tmp1->next != NULL)
+		{
+			tmp->next = tmp1->next;
+		}
+		else
+		{
+			tmp->next = NULL;
+		}
+		tmp1->next = tmp;
 	}
 
 	virtual T remove(int index)
