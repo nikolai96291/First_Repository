@@ -2,27 +2,43 @@
 [----------] Global test environment set-up.
 [----------] 7 tests from ListTest
 [ RUN      ] ListTest.ListLen
-[       OK ] ListTest.ListLen
+unknown file: Failure
+C++ exception with description "basic_string::_S_construct null not valid" thrown in the test body.
+[  FAILED  ] ListTest.ListLen
 [ RUN      ] ListTest.DeleteOne
-[       OK ] ListTest.DeleteOne
+unknown file: Failure
+C++ exception with description "basic_string::_S_construct null not valid" thrown in the test body.
+[  FAILED  ] ListTest.DeleteOne
 [ RUN      ] ListTest.AddOne
-[       OK ] ListTest.AddOne
+unknown file: Failure
+C++ exception with description "basic_string::_S_construct null not valid" thrown in the test body.
+[  FAILED  ] ListTest.AddOne
 [ RUN      ] ListTest.AddAndCheckOne
-cur.cpp:46: Failure
-Value of: l->get(0).c_str()
-  Actual: ""
-Expected: "fail"
+unknown file: Failure
+C++ exception with description "basic_string::_S_construct null not valid" thrown in the test body.
 [  FAILED  ] ListTest.AddAndCheckOne
 [ RUN      ] ListTest.PopOne
-[       OK ] ListTest.PopOne
+unknown file: Failure
+C++ exception with description "basic_string::_S_construct null not valid" thrown in the test body.
+[  FAILED  ] ListTest.PopOne
 [ RUN      ] ListTest.PushPop
-[       OK ] ListTest.PushPop
+unknown file: Failure
+C++ exception with description "basic_string::_S_construct null not valid" thrown in the test body.
+[  FAILED  ] ListTest.PushPop
 [ RUN      ] ListTest.PushPop1E3
-[       OK ] ListTest.PushPop1E3
+unknown file: Failure
+C++ exception with description "basic_string::_S_construct null not valid" thrown in the test body.
+[  FAILED  ] ListTest.PushPop1E3
 [----------] Global test environment tear-down
 [==========] 7 tests from 1 test case ran.
-[  PASSED  ] 6 tests.
-[  FAILED  ] 1 test, listed below:
+[  PASSED  ] 0 tests.
+[  FAILED  ] 7 tests, listed below:
+[  FAILED  ] ListTest.ListLen
+[  FAILED  ] ListTest.DeleteOne
+[  FAILED  ] ListTest.AddOne
 [  FAILED  ] ListTest.AddAndCheckOne
+[  FAILED  ] ListTest.PopOne
+[  FAILED  ] ListTest.PushPop
+[  FAILED  ] ListTest.PushPop1E3
 
- 1 FAILED TEST
+ 7 FAILED TESTS
